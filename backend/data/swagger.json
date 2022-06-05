@@ -1,0 +1,438 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Challenge-6 Car Management API",
+      "description": "OpenAPI for Car Management API",
+      "version": "1",
+      "termsOfService": "https://www.instagram.com/narantyomaulana/",
+      "contact": {
+        "name": "Narantyo Maulana A.N",
+        "email": "narantyomaulana122@gmail.com",
+        "url": "https://www.instagram.com/narantyomaulana/"
+      },
+      "license": {
+        "name": "APACHE 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    "tags": [
+      {
+        "name": "Cars",
+        "description": "API for cars in the system"
+      },
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      }
+    ],
+    "servers": [
+      {
+        "description": "Challenge-6 Car Management API Server",
+        "url": "http://localhost:8080/{env}",
+        "variables": {
+          "env": {
+            "description": "Server Environment",
+            "default": "api/v1",
+            "enum": ["api/v1", "dev"]
+          }
+        }
+      }
+    ],
+    "externalDocs": {
+      "url": "https://swagger.io/docs/specification/about/",
+      "description": "OpenAPI Guide"
+    },
+    "paths": {
+      "/cars": {
+        "get": {
+          "security": [{
+            "CarAuth": []
+        }],
+          "tags": ["Cars"],
+          "summary": "Get All Cars",
+          "description": "Get all car which is not deleted",
+          "responses": {
+            "200": {
+              "description": "Success get all cars",
+              "content": {
+                "application/json" : {
+                  "examples": {
+                    "success": {
+                      "description": "Example success get all car",
+                      "value": [
+                        {
+                          "id": 1,
+                          "type": "Terios",
+                          "year": "2019",
+                          "rentPerDay": 400000,
+                          "description": "qkdoqkdoqkdqkdk",
+                          "image": "terios.jpg",
+                          "available": true,
+                          "availableAt": "ga ada nihh",
+                          "createdBy": "admin@gmail.com",
+                          "updatedBy": "admin@gmail.com",
+                          "isDeleted": false,
+                          "deletedBy": null,
+                          "createdAt": "2022-05-13T04:08:25.382Z",
+                          "updatedAt": "2022-05-13T06:06:25.588Z"
+                        },
+                        {
+                            "id": 6,
+                            "type": "Jazz",
+                            "year": "2019",
+                            "rentPerDay": 500000,
+                            "description": "hiyaaaa",
+                            "image": "jaz.jpg",
+                            "available": true,
+                            "availableAt": "ada nihh",
+                            "createdBy": "admin@gmail.com",
+                            "updatedBy": null,
+                            "isDeleted": false,
+                            "deletedBy": null,
+                            "createdAt": "2022-05-13T14:10:28.814Z",
+                            "updatedAt": "2022-05-13T14:10:28.814Z"                    
+                        }  
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "security": [
+            {
+              "CarAuth": []
+            }
+          ],
+          "tags": ["Cars"],
+          "summary": "Create New Car",
+          "description": "Create one car by admin or superadmin only",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref" : "#/components/schemas/CarSchemaReqBody"
+  
+                },
+                "examples": {
+                  "cars": {
+                    "description": "Example Create New Car",
+                    "value": {
+                      "type": "Jazz",
+                      "year": "2019",
+                      "rentPerDay": 500000,
+                      "description": "hiyaaaa",
+                      "image": "jazz.jpg",
+                      "available": true,
+                      "availableAt": "ada nihh",
+                      "createdBy": "admin@gmail.com",
+                      "updatedAt": "2022-05-13T14:10:28.814Z",
+                      "createdAt": "2022-05-13T14:10:28.814Z",
+                      "updatedBy": null,
+                      "isDeleted": false,
+                      "deletedBy": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Succes create new car",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/cars/{id}": {
+        "get": {
+          "security": [
+            {
+              "CarAuth": []
+            }
+          ],
+          "tags": ["Cars"],
+          "summary": "Get Spesific Car",
+          "description": "Update car by admin or superadmin only",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/id"
+            }
+          ],
+          "responses": {}
+        },
+        "put": {
+          "security": [
+            {
+              "CarAuth": []
+            }
+          ],
+          "tags": ["Cars"],
+          "summary": "Update Existing Car",
+          "description": "Update car by admin or superadmin only",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/id"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref" : "#/components/schemas/CarSchemaReqBody"
+                },
+                "examples": {
+                  "dummy_input": {
+                    "description": "Example Create New Car",
+                    "value": {
+                      "type": "Ferari",
+                      "year": "2020",
+                      "rentPerDay": 5000,
+                      "description": "This Is Ferari",
+                      "image": "ferari.jpg",
+                      "available": true,
+                      "availableAt": "ready",
+                      "createdBy": "admin@gmail.com",
+                      "updatedBy": "admin@gmail.com",
+                      "isDeleted": false,
+                      "deletedBy": null,
+                      "createdAt": "2022-05-13T14:10:28.814Z",
+                      "updatedAt": "2022-05-14T06:32:23.642Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {}
+        },
+        "delete": {
+          "security": [
+            {
+              "CarAuth": []
+            }
+          ],
+          "tags": ["Cars"],
+          "summary": "Delete Existing Car",
+          "description": "make isDeleted atribute true, but not deleting from database",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/id"
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/register": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "Create new user",
+          "description": "Create new user as member",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success creating new user"
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "Login user",
+          "description": "Login user",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "superadmin": {
+                    "description": "login as superadmin",
+                    "value": {
+                      "email": "admin@gmail.com",
+                      "password": "password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success login"
+            }
+          }
+        }
+      },
+      "/users/{id}/update-admin": {
+        "put": {
+          "security": [
+            {
+              "CarAuth": []
+            }
+          ],
+          "tags": ["Users"],
+          "summary": "Change user to role admin",
+          "description": "Change user role to admin by superadmin only",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "User id for changing role to admin",
+              "schema": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            }
+          ],
+          "requestBody":{
+            "required":true,
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "isAdmin":{
+                      "type":"boolean",
+                      "example":true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Succes update role"
+            }
+          }
+        }
+      },
+      "/whoami": {
+        "get": {
+          "security": [
+            {
+              "CarAuth": []
+            }
+          ],
+          "tags": [
+            "Users"
+          ],
+          "summary": "Show data user who logged in",
+          "description": "Show data user who logged in at the moment",
+          "responses": {
+            "200": {
+              "description": "Succes show data user who logged in"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "CarAuth": {
+          "description": "Authentication for Car Management API",
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
+      "parameters": {
+        "id": {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Car id for get spesific car",
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        }
+      },
+      "schemas": {
+        "CarSchemaReqBody": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "year": {
+              "type": "string"
+            },
+            "rentPerDay": {
+              "type": "integer"
+            },
+            "description": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "available": {
+              "type": "boolean"
+            },
+            "availableAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "updatedBy": {
+              "type": "string"
+            },
+            "deletedBy": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  
